@@ -37,8 +37,7 @@ Modernizr.load [
     load: [
       "javascripts/lib/dom_extensions.js"
       "javascripts/lib/game.js"
-      "javascripts/lib/screen.base.js"
-      "javascripts/lib/screen.menu.js"
+      "javascripts/lib/screens/screen.base.js"
     ]
 
     complete: ->
@@ -47,17 +46,22 @@ Modernizr.load [
 
   {
     test: Modernizr.standalone
-    yep: "javascripts/lib/screen.splash.js"
-    nope: "javascripts/lib/screen.install.js"
+    yep: "javascripts/lib/screens/screen.splash.js"
+    nope: "javascripts/lib/screens/screen.install.js"
+
     complete: ->
       console.info "initial screen js loaded ..."
       new twoz.screens.current.render()
-      null
   }
 ]
 
 if Modernizr.standalone
   Modernizr.load [
     load: [
+      "javascripts/lib/screens/screen.menu.js"
+      "javascripts/lib/screens/screen.game.js"
     ]
+    complete: ->
+      # TODO: while developing the game this helps by refresh
+      twoz.screens.game.render()
   ]

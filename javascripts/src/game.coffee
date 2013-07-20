@@ -1,11 +1,20 @@
 namespace 'twoz', (exports, top) ->
   class Game
-    @config: {}
+    @config:
+      map_settings: {}
 
-    @update_screen: (next_screen) ->
-      @current_screen?.hide()
-      @current_screen = next_screen
-      @current_screen.render()
+    handle_map_update: (event) =>
+      console.debug(event.data)
 
 
-  exports.game = Game
+
+    run: ->
+      worker = new Worker 'javascripts/lib/worker/worker.map.js'
+      worker.onmessage = @handle_map_update
+      worker.postMessage "Can you hear me?"
+
+
+
+
+
+  exports.game = new Game()

@@ -3,16 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="viewport" content="width=device-width, user-scalable=no, height=device-height"/>
 
   <title>Twisted World Of Zork</title>
 
+  <link rel="stylesheet" href="stylesheets/vendor/normalize.css"/>
+  <link rel="stylesheet" href="stylesheets/vendor/pure-min.css"/>
   <link rel="stylesheet" href="stylesheets/lib/game.css"/>
   <script src="javascripts/vendor/modernizr.custom.47382.js"></script>
 </head>
 <body>
 <div id="debug"></div>
 
-<div class="game">
+<div class="stage">
   <div class="screen install">
     Download the game, by adding it to your HomeScreen!
   </div>
@@ -23,9 +26,13 @@
 
   <div class="screen menu">
     <ul>
-      <li><a href="">Start</a></li>
-      <li><a href="">Credits</a></li>
+      <li><button class="start pure-button">Start</button></li>
+      <li><button class="credits pure-button">Credits</button></li>
     </ul>
+  </div>
+
+  <div class="screen game">
+    GAME go on
   </div>
 </div>
 <script src="javascripts/lib/initialize.js"></script>
