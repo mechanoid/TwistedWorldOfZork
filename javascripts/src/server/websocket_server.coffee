@@ -23,5 +23,8 @@ ws.on "request", (request) ->
         message.utf8Data
 #
     console.log util.inspect(message.tiles)
+
     map.find_tiles message.tiles..., (tiles) ->
+      console.log 'callback called!'
+
       connection.sendUTF JSON.stringify(tiles)
