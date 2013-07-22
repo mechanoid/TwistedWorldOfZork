@@ -35,6 +35,7 @@ Modernizr.load [
 
   {
     load: [
+      "javascripts/lib/game_renderer.js"
       "javascripts/lib/game.js"
       "javascripts/lib/screens/screen.base.js"
     ]

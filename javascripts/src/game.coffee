@@ -14,15 +14,13 @@ namespace 'twoz', (exports, top) ->
       @worker.onerror = @handle_worker_error
 
     handle_map_update: (event) =>
-      console.debug(event.data)
+      twoz.game_renderer.paint_map(event.data)
 
     tile_id: (x_pos, y_pos) =>
       "x#{@current_position.x + x_pos}y#{@current_position.y + y_pos}"
 
     tile_row: (y_pos) ->
-      res = (@tile_id(x_pos, y_pos) for x_pos in [-1..1])
-      console.debug res
-      res
+      (@tile_id(x_pos, y_pos) for x_pos in [-1..1])
 
     visible_tiles: ->
       visible_tiles = []
@@ -30,12 +28,17 @@ namespace 'twoz', (exports, top) ->
         visible_tiles.push @tile_row(y_pos)...
       visible_tiles
 
-    render_visible_map: ->
+    lookup_visible_map: ->
       @worker.postMessage { tiles: @visible_tiles() }
+
+    modify_starting_position: ->
+      @current_position.x = Math.floor(Math.random() * 5)
+      @current_position.y = Math.floor(Math.random() * 5)
 
     run: =>
       console.debug('run game ...')
       @initialize_backend_worker()
-      @render_visible_map()
+      @modify_starting_position()
+      @lookup_visible_map()
 
   exports.game = new Game()

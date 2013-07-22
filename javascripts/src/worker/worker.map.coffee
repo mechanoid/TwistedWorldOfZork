@@ -1,7 +1,7 @@
 class MapWorker
   constructor: ->
     @socket = new WebSocket "ws://127.0.0.1:9999/"
-    postMessage 'connecting to websocket ...'
+#    postMessage 'connecting to websocket ...'
 
     @socket.onmessage = (message) ->
       postMessage JSON.parse(message.data)
