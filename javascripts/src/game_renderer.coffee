@@ -24,12 +24,9 @@ namespace 'twoz', (exports, top) ->
       console.debug 'paint map'
       @ctx.save()
 
-      imageObj = new Image()
-      imageObj.onload = =>
-        for x in [0..9]
-          for y in [0..9]
-            @ctx.drawImage(imageObj, x*30, y*15, 30, 15);
-      imageObj.src = '/images/green.png';
+      for x in [0..9]
+        for y in [0..9]
+          @ctx.drawImage(twoz.images['images/green.png'], x*30, y*15, 30, 15);
 
 
   exports.game_renderer = new GameRenderer()

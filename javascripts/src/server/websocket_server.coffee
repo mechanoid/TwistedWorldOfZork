@@ -24,7 +24,6 @@ ws.on "request", (request) ->
 #
     console.log util.inspect(message.tiles)
 
-    map.find_tiles message.tiles..., (tiles) ->
-      console.log 'callback called!'
-
-      connection.sendUTF JSON.stringify(tiles)
+    map.find_tiles message.tiles..., (result) ->
+      console.log(result.exception)
+      connection.sendUTF JSON.stringify(result)

@@ -21,19 +21,54 @@ Modernizr.addTest "standalone", ->
   target = target[item] or= {} for item in name.split '.'
   block target, top
 
+namespace 'twoz', (exports, top) ->
+  exports.images = {}
+
+namespace 'image_tester', (exports, top) ->
+
+#  class ImageTester
+  load_images: 0
+  loaded_images: 0
+
+  class ImageTester
+    @kind_of_image: (resource) ->
+      /.+\.(jpg|png|gif)$/i.test(resource.url)
 
 
-Modernizr.load [
-  {
+    @prefix_handler: (resource) =>
+      resource.noexec = @kind_of_image(resource)
+
+      @load_images++
+
+      resource.autoCallback = (event) =>
+        @loaded_images++
+        if @kind_of_image(resource)
+          image = new Image()
+          image.src = resource.url
+          twoz.images[resource.url] = image
+
+      resource
+
+  exports.prefix_handler = ImageTester.prefix_handler
+
+yepnope.addPrefix 'loader', image_tester.prefix_handler
+
+
+@load_stage_1 = ->
+  Modernizr.load [
+    load: [
+      "loader!images/green.png"
+    ]
+    complete: ->
+      console.info "preloading images ..."
+  ,
     load: [
       "javascripts/vendor/jquery-2.0.3.js"
     ]
 
     complete: ->
       console.info "Vendor libraries loaded ..."
-  }
-
-  {
+  ,
     load: [
       "javascripts/lib/game_renderer.js"
       "javascripts/lib/game.js"
@@ -42,9 +77,7 @@ Modernizr.load [
 
     complete: ->
       console.info "Base libraries loaded ..."
-  }
-
-  {
+  ,
     test: Modernizr.standalone
     yep: "javascripts/lib/screens/screen.splash.js"
     nope: "javascripts/lib/screens/screen.install.js"
@@ -52,10 +85,10 @@ Modernizr.load [
     complete: ->
       console.info "initial screen js loaded ..."
       new twoz.screens.current.render()
-  }
-]
 
-if Modernizr.standalone
+  ]
+
+@load_stage_2 = ->
   Modernizr.load [
     load: [
       "javascripts/lib/screens/screen.menu.js"
@@ -64,4 +97,18 @@ if Modernizr.standalone
     complete: ->
       # TODO: while developing the game this helps by refresh
       twoz.screens.game.render()
+
   ]
+
+
+
+
+
+# This load block loads libraries in every case
+load_stage_1()
+
+# This block is loaded for standalone / non-mobile browsers only
+load_stage_2() if Modernizr.standalone
+
+
+

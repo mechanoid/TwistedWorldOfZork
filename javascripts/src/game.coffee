@@ -14,7 +14,8 @@ namespace 'twoz', (exports, top) ->
       @worker.onerror = @handle_worker_error
 
     handle_map_update: (event) =>
-      twoz.game_renderer.paint_map(event.data)
+      throw event.data.exception if event.data.exception?
+      twoz.game_renderer.paint_map(event.data.tiles)
 
     tile_id: (x_pos, y_pos) =>
       "x#{@current_position.x + x_pos}y#{@current_position.y + y_pos}"
