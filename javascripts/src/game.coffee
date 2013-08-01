@@ -14,8 +14,11 @@ namespace 'twoz', (exports, top) ->
       @worker.onerror = @handle_worker_error
 
     handle_map_update: (event) =>
-      throw event.data.exception if event.data.exception?
-      twoz.game_renderer.paint_map(event.data.tiles)
+      try
+        throw event.data.exception if event.data.exception?
+        twoz.game_renderer.paint_map(event.data.tiles)
+      catch
+        console.error 'REDIS CONNECTION FAILED: please run redis'
 
     tile_id: (x_pos, y_pos) =>
       "x#{@current_position.x + x_pos}y#{@current_position.y + y_pos}"
