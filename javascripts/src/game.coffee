@@ -18,7 +18,7 @@ namespace 'twoz', (exports, top) ->
         throw event.data.exception if event.data.exception?
         twoz.game_renderer.paint_map(event.data.tiles)
       catch
-        console.error 'REDIS CONNECTION FAILED: please run redis'
+        console.error '500: server couldn\'t connect to the redis db'
 
     tile_id: (x_pos, y_pos) =>
       "x#{@current_position.x + x_pos}y#{@current_position.y + y_pos}"
