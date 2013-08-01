@@ -57,7 +57,9 @@ yepnope.addPrefix 'loader', image_tester.prefix_handler
 @load_stage_1 = ->
   Modernizr.load [
     load: [
-      "loader!images/green.png"
+      "loader!images/field.png"
+      "loader!images/rock.png"
+      "loader!images/tree.png"
     ]
     complete: ->
       console.info "preloading images ..."
